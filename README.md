@@ -38,4 +38,4 @@ If you omit the parameters, the program will choose random values between 0 and 
 matrix
 ```
 
-_Quick note:\_ this program was meant as a built-in for a minishell. The `rand()` function was not allowed there, so I implemented a workaround to generate pseudo-random values._
+_Quick note: this program was meant as a built-in for a minishell. The `rand()` function was not allowed there, so I implemented a workaround to generate pseudo-random values._
