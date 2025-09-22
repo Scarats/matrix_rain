@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
 
 # define GREEN "\x1B[32m"  // Green
 # define RESET "\x1B[0m"

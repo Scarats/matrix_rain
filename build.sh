@@ -15,7 +15,7 @@ cd -- "$(dirname "$0")"
 # Compile (use $CC if set, otherwise 'cc')
 # You can override flags via CFLAGS env var when invoking the script.
 : "${CC:=cc}"
-: "${CFLAGS:=-O2 -std=c11 -Wall -Wextra}"
+: "${CFLAGS:= -Wall -Wextra}"
 "$CC" $CFLAGS -o matrix matrix.c
 
 # Choose install directory (override by passing one, e.g. /usr/local/bin)
