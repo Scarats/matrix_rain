@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 		width %= MATRIX;
 		free(buff);
 	}
-	if (width == 0)
+	if (width < 1)
 		width = MATRIX;
 
 	array = malloc(width * sizeof(*array));
@@ -160,7 +160,7 @@ int main(int argc, char **argv)
 		height = atoi(argv[2]);
 	else
 		height = MATRIX;
-	if (height == 0)
+	if (height < 1)
 		height = MATRIX;
 
 	printf(GREEN "\n\nFollow the white rabbit.\n\n" RESET);
