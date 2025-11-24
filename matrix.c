@@ -12,7 +12,13 @@
 # define RESET "\x1B[0m"
 # define MATRIX 100
 
-volatile sig_atomic_t g_stop_flag;
+volatile sig_atomic_t g_stop_flag = 0;
+
+static void sigint_handler(int signum)
+{
+    (void)signum;
+    g_stop_flag = 1;
+}
 
 // Read from random, else generate an int from a memory address.
 int	gen_random(int size)
@@ -130,14 +136,22 @@ void	matrix_rest(int height, int width, int *array, char *buff)
 // matrix width height
 int	main(int ac, char **argv)
 {
-	int		width;
-	int		height;
-	int		*array;
-	char	*buff;
+    int		width;
+    int		height;
+    int		*array;
+    char	*buff;
+    struct sigaction	sa;
 
-	(void)ac;
-	buff = NULL;
-	if (argv[1])
+    (void)ac;
+    buff = NULL;
+
+    /* install SIGINT/SIGTERM handler to allow clean shutdown and free memory */
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = sigint_handler;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
+
+    if (argv[1])
 		width = atoi(argv[1]);
 	else
 	{
@@ -149,7 +163,11 @@ int	main(int ac, char **argv)
 	if (width < 1 || width > 10000)
 		width = MATRIX;
 	array = malloc(width * sizeof(*array));
+	if (!array)
+		return (1);
 	buff = malloc(width + 1);
+	if (!buff)
+		return (1);
 	if (argv[2] && (atoi(argv[2]) > 0 && atoi(argv[2]) < 10000))
 		height = atoi(argv[2]);
 	else
